@@ -5,6 +5,8 @@ var sass = require('gulp-sass');
 var fileinclude = require('gulp-file-include');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
+var gutil = require( 'gulp-util' );
+var ftp = require( 'vinyl-ftp' );
 
 
 
@@ -92,5 +94,34 @@ gulp.task('miniimg',function(){
 })  
 
 
+//ftp
 
 
+
+
+
+gulp.task( 'ftp', function () {
+ 
+  var conn = ftp.create( {
+      host:     '140.115.236.71',
+      user:     '%ed101+',
+      password: '!654=stu&',
+      parallel: 10
+      
+  } );
+
+  var globs = [
+      'dest/**',
+      'dest/css/**',
+      'dest/images/**',
+      'index.html'
+  ];
+
+  // using base = '.' will transfer everything to /public_html correctly
+  // turn off buffering in gulp.src for best performance
+
+  return gulp.src( globs, { base: '.', buffer: false } )
+      .pipe( conn.newer( './T2000278' ) ) // only upload newer files
+      .pipe( conn.dest( './T2000278' ) );
+
+} );
