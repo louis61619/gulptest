@@ -81,9 +81,15 @@ gulp.task('default', function() {
 
 
 
+//壓圖
 
-
-
+const imagemin = require('gulp-imagemin');
+ 
+gulp.task('miniimg',function(){
+  gulp.src('./dev/images/*')
+  .pipe(imagemin())
+  .pipe(gulp.dest('dest/images'))
+})  
 
 
 
